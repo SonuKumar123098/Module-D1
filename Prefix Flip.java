@@ -1,4 +1,46 @@
 //https://course.acciojob.com/idle?question=30864598-6a6b-4ec9-afae-a30ab4a78e0e
+//accepted on codforces but not on acciojob
+class Solution{
+static void solve(String a,String b,int n)
+{
+// your code here
+    char[]a1=a.toCharArray();
+    char b1[]=b.toCharArray();
+    ArrayList<Integer>operation=new ArrayList<>();
+    int flip=0;
+    int start=0; int end=n-1;
+    for(int i=n-1;i>=0;i--){
+       if(flip%2==0){
+          if(b1[i]==a1[end]) end--;
+          else{
+             if(b1[i]==a1[start])
+                 operation.add(1);
+             operation.add(i+1);
+             flip++;
+             int temp=end;
+             end=start+1;
+             start=temp;
+         }
+      }else{
+         if(b1[i]!=a1[end]) end++;
+         else{
+             if(b1[i]!=a1[start])
+                 operation.add(1);
+             operation.add(i+1);
+             flip++;
+             int temp=end;
+             end=start-1;
+             start=temp;
+        }
+      }
+    }
+    System.out.print(operation.size()+" ");
+    for(int k:operation){
+        System.out.print(k+" ");
+    }
+    System.out.println();
+  }
+}
 //brute force approach
 class Solution{
     static void reverse(char[]a1, int ind){
