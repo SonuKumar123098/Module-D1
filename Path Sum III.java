@@ -23,3 +23,16 @@ class Solution {
         return cnt;
     }
 }
+//https://leetcode.com/problems/path-sum-iii/
+class Solution {
+    private int findPath(TreeNode root,long target){
+        if(root==null)return 0;
+        int ans=0;
+        if(root.val==target) ans++;
+        return ans+findPath(root.left,target-root.val)+findPath(root.right,target-root.val);
+    }
+    public int pathSum(TreeNode root, int targetSum) {
+        if(root==null) return 0;
+        return findPath(root,targetSum)+pathSum(root.left,targetSum)+pathSum(root.right,targetSum);
+    }
+}
