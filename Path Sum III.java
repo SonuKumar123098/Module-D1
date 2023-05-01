@@ -2,6 +2,24 @@
 
 //https://leetcode.com/problems/path-sum-iii/
 class Solution {
+    private int findPath(TreeNode root,long target,long curSum,HashMap<Long,Integer>prefSum){
+        if(root==null)return 0;
+        int ans=0;
+        curSum+=root.val;
+        ans+=prefSum.getOrDefault(curSum-target,0);
+        prefSum.put(curSum,prefSum.getOrDefault(curSum,0)+1);
+        ans+=findPath(root.left,target,curSum,prefSum)+findPath(root.right,target,curSum,prefSum);
+        prefSum.put(curSum,prefSum.get(curSum)-1);
+        return ans;
+    }
+    public int pathSum(TreeNode root, int targetSum) {
+        if(root==null) return 0;
+        HashMap<Long,Integer>prefSum=new HashMap<>();
+        prefSum.put(0l,1);
+        return findPath(root,targetSum,0,prefSum);
+    }
+}
+class Solution {
     int cnt;
     private void findPath(TreeNode root,long target){
         if(root==null)return;
