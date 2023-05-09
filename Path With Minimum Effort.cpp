@@ -45,3 +45,38 @@ public:
             return l;
     }
 };
+//2nd approach
+class Solution {//dijkstra's algorithm
+public:
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        int m=heights.size();
+        int n=heights[0].size();
+        vector<vector<int>> dist(m,vector<int>(n,INT_MAX));
+        vector<pair<int,int>>dirn={{0,1},{0,-1},{1,0},{-1,0}};
+        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>pq;
+        pq.push({0,0,0});//(d,x,y)
+        dist[0][0]=0;
+        while(pq.size()){
+            auto v=pq.top();
+            pq.pop();
+            int d=v[0];
+            int x=v[1];
+            int y=v[2];
+            if(x==m-1 and y==n-1){
+                return d;
+            }
+            for(int i=0;i<4;i++){
+                int nx=x+dirn[i].first;
+                int ny=y+dirn[i].second;
+                if(nx>=0 and ny>=0 and nx<m and ny<n ){
+                    int nd=max(d,abs(heights[x][y]-heights[nx][ny]));
+                    if(nd<dist[nx][ny]){
+                        dist[nx][ny]=nd;
+                        pq.push({nd,nx,ny});
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
